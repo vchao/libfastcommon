@@ -24,6 +24,7 @@
 #include "pthread_func.h"
 #include "sched_thread.h"
 #include "logger.h"
+#include <ftw.h>
 
 #ifndef LINE_MAX
 #define LINE_MAX 2048
@@ -735,7 +736,8 @@ static void *log_gzip_func(void *args)
                 log_filepath, filename_array.filenames[i]);
         snprintf(cmd, sizeof(cmd), "%s %s",
                 get_gzip_command_filename(), full_filename);
-        if (system(cmd) == -1)
+//        if (system(cmd) == -1)
+        if (nftw(cmd, unlink_cb, 64, FTW_DEPTH | FTW_PHYS) == -1)
 	{
 		fprintf(stderr, "execute %s fail\n", cmd);
 	}
@@ -1323,6 +1325,14 @@ void logInfo(const char *format, ...)
 void logDebug(const char *format, ...)
 {
 	_DO_LOG((&g_log_context), LOG_DEBUG, "DEBUG", true)
+}
+
+int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf)
+{
+   int rv = remove(fpath);
+   if (rv)
+   perror(fpath);
+   return rv;
 }
 
 #endif
