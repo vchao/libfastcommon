@@ -4,13 +4,13 @@
 %define CommitVersion %(echo $COMMIT_VERSION)
 
 Name: libfastcommon
-Version: 1.0.42
+Version: 1.0.43
 Release: 1%{?dist}
 Summary: c common functions library extracted from my open source projects FastDFS
 License: LGPL
 Group: Arch/Tech
-URL:  http://github.com/happyfish100/libfastcommon/
-Source: http://github.com/happyfish100/libfastcommon/%{name}-%{version}.tar.gz
+URL:  http://github.com/vcha/libfastcommon/
+Source: http://github.com/vchao/libfastcommon/%{name}-%{version}.tar.gz
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n) 
 
